@@ -27,23 +27,24 @@ var game = new Phaser.Game({
 function init() {}
 function end() {}
 function update() {
-  var speed = 70;
-  var now = new Date().getTime();
+  var speed = 60;
   if (isStart === true) {
     spin.alpha = 0.5;
     spin.disableInteractive();
-    console.log(barContainer1.y);
-    if (now < endTime1) {
+
+    timeCounter += speed;
+    if (timeCounter <= endTime1) {
       barContainer1.y += speed;
     }
-    if (now < endTime2) {
+    if (timeCounter <= endTime2) {
       barContainer2.y += speed;
     }
-    if (now < endTime3) {
+    if (timeCounter <= endTime3) {
       barContainer3.y += speed;
     }
 
-    if (now >= endTime) {
+    if (timeCounter >= maxCounter) {
+      timeCounter = 0;
       isStart = false;
       spin.alpha = 1;
       spin.setInteractive({ cursor: "pointer" });
@@ -84,7 +85,7 @@ const fruitsEnum = {
 };
 const fruitsEnumLength = 3;
 const barLength = 6;
-const maxRoll = 50;
+const maxRoll = 30;
 var bar1 = [];
 var bar2 = [];
 var bar3 = [];
@@ -102,6 +103,8 @@ var endTime1;
 var endTime2;
 var endTime3;
 var endTime;
+var timeCounter = 0;
+var maxCounter = 0;
 
 var barContainers;
 var barContainer1;
@@ -279,16 +282,24 @@ function create() {
         barContainer2.y = 520;
         barContainer3.y = 520;
 
-        var now = new Date().getTime();
-        endTime1 = now + getRandom(1000) + 2000;
-        endTime2 = endTime1 + getRandom(300) + 100;
-        endTime3 = endTime2 + getRandom(300) + 100;
+        /*
+        endTime1 = getRandom(12) * 300 + 2000 + 60;
+        endTime2 = endTime1 + getRandom(6) * 300 + 300;
+        endTime3 = endTime2 + getRandom(3) * 300 + 300 + 60;*/
+
+        endTime1 = getRandom(6) * 300 + 7200;
+        endTime2 = endTime1 + getRandom(6) * 300 + 300;
+        maxCounter = getRandom(10) * 300 + 9000;
+        endTime3 = endTime2 + getRandom(6) * 300 + 300;
+
+        console.log(endTime1, endTime2, endTime3);
+
         endTime = endTime3;
 
         lucklyIndexs = [
-          getRandom(barLength - 1),
-          getRandom(barLength - 1),
-          getRandom(barLength - 1),
+          Math.floor(endTime1 / 300 / 6),
+          Math.floor(endTime2 / 300 / 6),
+          Math.floor(endTime3 / 300 / 6),
         ];
 
         isStart = true;
@@ -299,12 +310,13 @@ function create() {
           bar2[lucklyIndexs[1]],
           bar3[lucklyIndexs[2]]
         );
-
-        /* this.scene.tweens.add({
+        /*
+        this.scene.tweens.add({
           targets: barContainer1,
-          y: { from: 520, to: (barLength * maxRoll - 5) * 120 },
+          y: { from: 520, to: 18000 },
           ease: "Linear",
-          duration: endTime1,
+          elapsed: 14112,
+          duration: 1000,
         });*/
       }
     });
