@@ -27,18 +27,19 @@ var game = new Phaser.Game({
 function init() {}
 function end() {}
 function update() {
-  var speed = 60;
+  var speed = 70;
   var now = new Date().getTime();
   if (isStart === true) {
     spin.alpha = 0.5;
     spin.disableInteractive();
-    if (now > startTime1) {
+    console.log(barContainer1.y);
+    if (now < endTime1) {
       barContainer1.y += speed;
     }
-    if (now > startTime2) {
+    if (now < endTime2) {
       barContainer2.y += speed;
     }
-    if (now > startTime3) {
+    if (now < endTime3) {
       barContainer3.y += speed;
     }
 
@@ -54,6 +55,14 @@ function update() {
 
       if (final1 == final2 && final2 == final3 && final1 == final3) {
         win.visible = true;
+        this.scene.scene.tweens.add({
+          targets: win,
+          alpha: { from: 1, to: 0.5 },
+          ease: "Sine.InOut",
+          duration: 80,
+          repeat: 3,
+          yoyo: true,
+        });
       } else {
         win.visible = false;
       }
@@ -85,10 +94,13 @@ var barOrj3 = [];
 var isCheatMenuOpen = true;
 var isWin = null;
 var isStart = false;
+var isCame1 = false;
+var isCame2 = false;
+var isCame2 = false;
 
-var startTime1;
-var startTime2;
-var startTime3;
+var endTime1;
+var endTime2;
+var endTime3;
 var endTime;
 
 var barContainers;
@@ -233,14 +245,10 @@ function create() {
   barContainer3 = this.add.container(980, 520);
 
   for (var i = 0; i < barLength * maxRoll; i++) {
-    barContainer1.add(this.add.image(380, 300 * i * -1, bar1[i]));
-    barContainer2.add(this.add.image(380, 300 * i * -1, bar2[i]));
-    barContainer3.add(this.add.image(380, 300 * i * -1, bar3[i]));
+    barContainer1.add(this.add.image(380, 300 * i * -1 + 300, bar1[i]));
+    barContainer2.add(this.add.image(380, 300 * i * -1 + 300, bar2[i]));
+    barContainer3.add(this.add.image(380, 300 * i * -1 + 300, bar3[i]));
   }
-
-  barContainer1.add(this.add.image(380, 300, bar1[barLength - 1]));
-  barContainer2.add(this.add.image(380, 300, bar2[barLength - 1]));
-  barContainer3.add(this.add.image(380, 300, bar3[barLength - 1]));
 
   const shape = this.make.graphics();
   shape.fillStyle(0xffffff);
@@ -264,18 +272,18 @@ function create() {
     })
     .on("pointerup", function (e) {
       if (isStart != true) {
-        this.scene.scene.start();
+        win.visible = false;
         setBars();
         spin.setScale(1, 1);
-        barContainer1.y = 520 * -1 * 60;
+        barContainer1.y = 520;
         barContainer2.y = 520;
         barContainer3.y = 520;
 
         var now = new Date().getTime();
-        startTime1 = now;
-        startTime2 = startTime1 + getRandom(2000) + 1000;
-        startTime3 = startTime2 + getRandom(2000) + 1000;
-        endTime = startTime3 + 2000 + 4000;
+        endTime1 = now + getRandom(1000) + 2000;
+        endTime2 = endTime1 + getRandom(300) + 100;
+        endTime3 = endTime2 + getRandom(300) + 100;
+        endTime = endTime3;
 
         lucklyIndexs = [
           getRandom(barLength - 1),
@@ -286,6 +294,18 @@ function create() {
         isStart = true;
 
         console.log(lucklyIndexs);
+        console.log(
+          bar1[lucklyIndexs[0]],
+          bar2[lucklyIndexs[1]],
+          bar3[lucklyIndexs[2]]
+        );
+
+        /* this.scene.tweens.add({
+          targets: barContainer1,
+          y: { from: 520, to: (barLength * maxRoll - 5) * 120 },
+          ease: "Linear",
+          duration: endTime1,
+        });*/
       }
     });
 
