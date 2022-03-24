@@ -1,31 +1,4 @@
-var game = new Phaser.Game({
-  type: Phaser.AUTO,
-  width: 1920,
-  height: 1080,
-  physics: {
-    default: "arcade",
-    arcade: {
-      gravity: { y: 200 },
-    },
-  },
-  scale: {
-    mode: Phaser.Scale.NONE,
-    _parent: "game",
-    autoCenter: Phaser.Scale.CENTER_BOTH,
-    width: 1920,
-    height: 1080,
-  },
-  scene: {
-    init: init,
-    preload: preload,
-    create: create,
-    update: update,
-    end: end,
-  },
-});
 
-function init() {}
-function end() {}
 function update() {
   var speed = 60;
   if (isStart === true) {
@@ -43,6 +16,7 @@ function update() {
       barContainer3.y += speed;
     }
 
+    console.log(barContainer1.y, barContainer2.y, barContainer3.y);
     if (timeCounter >= maxCounter) {
       timeCounter = 0;
       isStart = false;
@@ -69,70 +43,6 @@ function update() {
       }
     }
   }
-}
-
-// State and Variables
-var arrow;
-var win;
-var background;
-var spin;
-var cheatMenu;
-const oneRadianToDeggree = 0.0174533;
-const fruitsEnum = {
-  0: "blackberry",
-  1: "banana",
-  2: "cherry",
-};
-const fruitsEnumLength = 3;
-const barLength = 6;
-const maxRoll = 30;
-var bar1 = [];
-var bar2 = [];
-var bar3 = [];
-var barOrj1 = [];
-var barOrj2 = [];
-var barOrj3 = [];
-var isCheatMenuOpen = true;
-var isWin = null;
-var isStart = false;
-var isCame1 = false;
-var isCame2 = false;
-var isCame2 = false;
-
-var endTime1;
-var endTime2;
-var endTime3;
-var endTime;
-var timeCounter = 0;
-var maxCounter = 0;
-
-var barContainers;
-var barContainer1;
-var barContainer2;
-var barContainer3;
-
-var lucklyIndexs = [null, null, null];
-
-const cheatCode1TextStyle = {
-  fontSize: "28px",
-  fontFamily: "Arial",
-  fontStyle: "italic",
-  color: "#ffffff",
-  align: "left",
-};
-
-function preload() {
-  document.title = "Jackpot";
-  this.load.setBaseURL("./");
-  this.load.image("arrow", "assets/Arrow.png");
-  this.load.image("background", "assets/Background.png");
-  this.load.image("banana", "assets/Banana.png");
-  this.load.image("blackberry", "assets/Blackberry.png");
-  this.load.image("cheatToolBackground", "assets/CheatToolBackground.png");
-  this.load.image("cheatToolInput", "assets/CheatToolInput.png");
-  this.load.image("cherry", "assets/Cherry.png");
-  this.load.image("spin", "assets/Spin.png");
-  this.load.image("win", "assets/Win.png");
 }
 
 function create() {
