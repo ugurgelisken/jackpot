@@ -1,4 +1,4 @@
-// State and Variables
+// Variables
 var arrow;
 var win;
 var background;
@@ -12,7 +12,7 @@ const fruitsEnum = {
 };
 const fruitsEnumLength = 3;
 const barLength = 6;
-const maxRoll = 30;
+const maxRoll = 20;
 var bar1 = [];
 var bar2 = [];
 var bar3 = [];
