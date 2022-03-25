@@ -4,13 +4,13 @@ function update() {
     spin.alpha = 0.5;
     spin.disableInteractive();
     timeCounter += speed;
-    if (timeCounter <= endTime1) {
+    if (timeCounter <= endTime1 - 300) {
       barContainer1.y += speed;
     }
-    if (timeCounter <= endTime2) {
+    if (timeCounter <= endTime2 - 300) {
       barContainer2.y += speed;
     }
-    if (timeCounter <= endTime3) {
+    if (timeCounter <= endTime3 - 300) {
       barContainer3.y += speed;
     }
 
@@ -25,9 +25,10 @@ function update() {
       var final3 = bar3[lucklyIndexs[2]];
       console.log("---> ", lucklyIndexs);
       console.log("---> ", final1, final2, final3);
-      console.log("SPIN END!");
+      console.log("SPIN END");
 
       if (final1 == final2 && final2 == final3 && final1 == final3) {
+        console.log("😃 YOU WON 😃");
         win.visible = true;
         this.scene.scene.tweens.add({
           targets: win,
@@ -38,6 +39,7 @@ function update() {
           yoyo: true,
         });
       } else {
+        console.log("😟 LOSER 😟");
         win.visible = false;
       }
     }
@@ -98,40 +100,23 @@ function create() {
   // State
   win.visible = false;
 
-  function setBars() {
-    bar1 = [];
-    bar2 = [];
-    bar3 = [];
-    barOrj1 = [];
-    barOrj2 = [];
-    barOrj3 = [];
+  bar1 = [];
+  bar2 = [];
+  bar3 = [];
+  barOrj1 = [];
+  barOrj2 = [];
+  barOrj3 = [];
 
-    barOrj1 = generateRandomBar();
-    barOrj2 = generateRandomBar();
-    barOrj3 = generateRandomBar();
+  barOrj1 = generateRandomBar();
+  barOrj2 = generateRandomBar();
+  barOrj3 = generateRandomBar();
 
-    for (var i = 0; i < maxRoll; i++) {
-      bar1.push(...barOrj1);
-      bar2.push(...barOrj2);
-      bar3.push(...barOrj3);
-    }
-    console.log(bar1, bar2, bar3);
-
-    var randomRoll = Math.ceil(getRandom(maxRoll) / 2);
-
-    endTime1 = randomRoll * 300 + 1800;
-    endTime2 = endTime1 + getRandom(5) * 300 + 300;
-    endTime3 = endTime2 + getRandom(5) * 300 + 900;
-
-    console.log(randomRoll, endTime1, endTime2, endTime3);
-
-    endTime = endTime3;
-
-    lucklyIndexs = [endTime1 / 300, endTime2 / 300, endTime3 / 300];
-
-    // Bar 1
+  for (var i = 0; i < maxRoll; i++) {
+    bar1.push(...barOrj1);
+    bar2.push(...barOrj2);
+    bar3.push(...barOrj3);
   }
-  setBars();
+  console.log(bar1, bar2, bar3);
 
   barContainer1 = this.add.container(200, 520);
   barContainer2 = this.add.container(590, 520);
@@ -148,9 +133,10 @@ function create() {
   shape.beginPath();
   shape.fillRect(200, 290, 1320, 460);
   const mask = shape.createGeometryMask();
-  /* barContainer1.setMask(mask);
+
+  barContainer1.setMask(mask);
   barContainer2.setMask(mask);
-  barContainer3.setMask(mask);*/
+  barContainer3.setMask(mask);
 
   // Events
 
@@ -165,7 +151,17 @@ function create() {
       if (isStart != true) {
         win.visible = false;
 
-        setBars();
+        var randomRoll = Math.ceil(getRandom(maxRoll) / 2);
+
+        endTime1 = randomRoll * 300 + 1800;
+        endTime2 = endTime1 + getRandom(5) * 300 + 300;
+        endTime3 = endTime2 + getRandom(5) * 300 + 900;
+
+        console.log(randomRoll, endTime1, endTime2, endTime3);
+
+        endTime = endTime3;
+
+        lucklyIndexs = [endTime1 / 300, endTime2 / 300, endTime3 / 300];
 
         isStart = true;
 
@@ -173,25 +169,6 @@ function create() {
         barContainer1.y = 520;
         barContainer2.y = 520;
         barContainer3.y = 520;
-
-        /*
-        endTime1 = getRandom(12) * 300 + 2000 + 60;
-        endTime2 = endTime1 + getRandom(6) * 300 + 300;
-        endTime3 = endTime2 + getRandom(3) * 300 + 300 + 60;*/
-
-        /* endTime1 = getRandom(6) * 300 + 3600;
-        endTime2 = endTime1 + getRandom(6) * 300 + 300;
-        maxCounter = getRandom(10) * 300 + 9000;
-        endTime3 = endTime2 + getRandom(6) * 300 + 300;*/
-
-        /*
-        this.scene.tweens.add({
-          targets: barContainer1,
-          y: { from: 520, to: 18000 },
-          ease: "Linear",
-          elapsed: 14112,
-          duration: 1000,
-        });*/
       }
     });
 

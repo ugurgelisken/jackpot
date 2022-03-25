@@ -29,6 +29,7 @@ var endTime1;
 var endTime2;
 var endTime3;
 var endTime;
+var randomRoll;
 var timeCounter = 0;
 var maxCounter = 0;
 var barContainers;
