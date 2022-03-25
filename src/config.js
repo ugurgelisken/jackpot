@@ -4,9 +4,7 @@ var game = new Phaser.Game({
   height: 1080,
   physics: {
     default: "arcade",
-    arcade: {
-      gravity: { y: 200 },
-    },
+    arcade: {},
   },
   scale: {
     mode: Phaser.Scale.NONE,

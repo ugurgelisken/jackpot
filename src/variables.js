@@ -44,3 +44,7 @@ const cheatCode1TextStyle = {
   color: "#ffffff",
   align: "left",
 };
+var wheelPositionY = 520;
+var whellItemWidth = 380;
+var whellItemHeight = 300;
+var speed = 60;

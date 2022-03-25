@@ -1,16 +1,15 @@
 function update() {
-  var speed = 60;
   if (isStart === true) {
     spin.alpha = 0.5;
     spin.disableInteractive();
     timeCounter += speed;
-    if (timeCounter <= endTime1 - 300) {
+    if (timeCounter <= endTime1 - whellItemHeight) {
       barContainer1.y += speed;
     }
-    if (timeCounter <= endTime2 - 300) {
+    if (timeCounter <= endTime2 - whellItemHeight) {
       barContainer2.y += speed;
     }
-    if (timeCounter <= endTime3 - 300) {
+    if (timeCounter <= endTime3 - whellItemHeight) {
       barContainer3.y += speed;
     }
 
@@ -61,7 +60,7 @@ function create() {
   var cheatToolBackground = this.add.image(240, 150, "cheatToolBackground");
   var cheatToolInput1 = this.add.image(100, 140, "cheatToolInput");
   var cheatToolInput2 = this.add.image(242, 140, "cheatToolInput");
-  var cheatToolInput3 = this.add.image(380, 140, "cheatToolInput");
+  var cheatToolInput3 = this.add.image(whellItemWidth, 140, "cheatToolInput");
   var cheatTitleText = this.add.text(54, 74, "SYMBOL POSITION IN THE RELL", {
     fontSize: "24px",
     fontFamily: "Arial",
@@ -118,14 +117,32 @@ function create() {
   }
   console.log(bar1, bar2, bar3);
 
-  barContainer1 = this.add.container(200, 520);
-  barContainer2 = this.add.container(590, 520);
-  barContainer3 = this.add.container(975, 520);
+  barContainer1 = this.add.container(200, wheelPositionY);
+  barContainer2 = this.add.container(590, wheelPositionY);
+  barContainer3 = this.add.container(975, wheelPositionY);
 
   for (var i = 0; i < barLength * maxRoll; i++) {
-    barContainer1.add(this.add.image(380, 300 * i * -1 + 300, bar1[i]));
-    barContainer2.add(this.add.image(380, 300 * i * -1 + 300, bar2[i]));
-    barContainer3.add(this.add.image(380, 300 * i * -1 + 300, bar3[i]));
+    barContainer1.add(
+      this.add.image(
+        whellItemWidth,
+        whellItemHeight * i * -1 + whellItemHeight,
+        bar1[i]
+      )
+    );
+    barContainer2.add(
+      this.add.image(
+        whellItemWidth,
+        whellItemHeight * i * -1 + whellItemHeight,
+        bar2[i]
+      )
+    );
+    barContainer3.add(
+      this.add.image(
+        whellItemWidth,
+        whellItemHeight * i * -1 + whellItemHeight,
+        bar3[i]
+      )
+    );
   }
 
   const shape = this.make.graphics();
@@ -153,22 +170,26 @@ function create() {
 
         var randomRoll = Math.ceil(getRandom(maxRoll) / 2);
 
-        endTime1 = randomRoll * 300 + 1800;
-        endTime2 = endTime1 + getRandom(5) * 300 + 300;
-        endTime3 = endTime2 + getRandom(5) * 300 + 900;
+        endTime1 = randomRoll * whellItemHeight + 1800;
+        endTime2 = endTime1 + getRandom(5) * whellItemHeight + whellItemHeight;
+        endTime3 = endTime2 + getRandom(5) * whellItemHeight + 900;
 
         console.log(randomRoll, endTime1, endTime2, endTime3);
 
         endTime = endTime3;
 
-        lucklyIndexs = [endTime1 / 300, endTime2 / 300, endTime3 / 300];
+        lucklyIndexs = [
+          endTime1 / whellItemHeight,
+          endTime2 / whellItemHeight,
+          endTime3 / whellItemHeight,
+        ];
 
         isStart = true;
 
         spin.setScale(1, 1);
-        barContainer1.y = 520;
-        barContainer2.y = 520;
-        barContainer3.y = 520;
+        barContainer1.y = wheelPositionY;
+        barContainer2.y = wheelPositionY;
+        barContainer3.y = wheelPositionY;
       }
     });
 
